@@ -1,13 +1,28 @@
 const { JSDOM } = require('jsdom');
 require('colors')
 
-async function sweepPage(currURL) {
-    console.log(` STATUS: Sweeping ${currURL}`.bgYellow)
+async function sweepPage(baseURL, currURL, pages) {
+    const baseURLObj = new URL(baseURL);
+    const currURLObj = new URL(currURL);
+
+    if (baseURLObj.hostname !== currURLObj.hostname) {
+        return pages;
+    }
+
+    const normalizedCurrURL = normalizeURL(currURL);
+    if (pages[normalizedCurrURL] > 0) {
+        pages[normalizedCurrURL]++
+        return pages;
+    }
+    pages[normalizedCurrURL] = 1
+
+    console.log(` STATUS: Sweeping ${currURL} `)
+
    try {
      const resp = await fetch(currURL);
      if (resp.status > 399) {
         console.log(`ERROR in fetch with status code: ${resp.status} on this URL: ${currURL}`.bgRed)
-        return
+        return pages;
      }
 
      const contentType = resp.headers.get('content-type');
@@ -15,12 +30,19 @@ async function sweepPage(currURL) {
          console.log(
            ` NON-HTML RESPONSE content type: ${contentType}, on this URL: ${currURL} `.bgRed
          );
-         return
+         return pages;
      }
-     console.log(await resp.text());
+    const htmlBody = await resp.text();
+    const nextURLs = getURLsFromHTML(htmlBody, baseURL)
+
+    for (const nextURL of nextURLs) {
+        pages = await sweepPage(baseURL, nextURL, pages)
+    }
+
    } catch (error) {
         console.log(` ERROR in fetch: ${error.message}, on this URL: ${currURL} `.bgRed)
    }
+   return pages
 }
 
 function getURLsFromHTML(htmlBody, baseURL) {

@@ -1,7 +1,7 @@
 const { sweepPage } = require('./sweep')
 require('colors')
 
-function main() {
+async function main() {
     if (process.argv.length < 3) {
         console.log('NO website/url provided'.bgRed)
         process.exit(1)
@@ -12,7 +12,11 @@ function main() {
     }
     const baseURL = process.argv[2]
     console.log(` SWEEP HAS STARTED on ${baseURL}`.bgBlue)
-    sweepPage(baseURL)
+    const pages = await sweepPage(baseURL, baseURL, {})
+
+    for (const page of Object.entries(pages)) {
+      console.log(page);
+    }
 }
 
 main()
