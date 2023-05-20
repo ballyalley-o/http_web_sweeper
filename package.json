@@ -4,7 +4,7 @@
   "description": "",
   "main": "main.js",
   "scripts": {
-    "start": "nodemon --no-warnings main.js",
+    "start": "node --no-warnings main.js",
     "test": "jest"
   },
   "repository": {
@@ -18,8 +18,8 @@
   },
   "homepage": "https://github.com/ballyalley-o/http_web_sweeper#readme",
   "dependencies": {
-    "jsdom": "^22.0.0",
-    "nodemon": "^2.0.22"
+    "colors": "^1.4.0",
+    "jsdom": "^22.0.0"
   },
   "devDependencies": {
     "jest": "^29.5.0"

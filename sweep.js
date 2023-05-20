@@ -1,4 +1,27 @@
-const { JSDOM } = require('jsdom')
+const { JSDOM } = require('jsdom');
+require('colors')
+
+async function sweepPage(currURL) {
+    console.log(` STATUS: Sweeping ${currURL}`.bgYellow)
+   try {
+     const resp = await fetch(currURL);
+     if (resp.status > 399) {
+        console.log(`ERROR in fetch with status code: ${resp.status} on this URL: ${currURL}`.bgRed)
+        return
+     }
+
+     const contentType = resp.headers.get('content-type');
+     if (!contentType.includes('text/html')) {
+         console.log(
+           ` NON-HTML RESPONSE content type: ${contentType}, on this URL: ${currURL} `.bgRed
+         );
+         return
+     }
+     console.log(await resp.text());
+   } catch (error) {
+        console.log(` ERROR in fetch: ${error.message}, on this URL: ${currURL} `.bgRed)
+   }
+}
 
 function getURLsFromHTML(htmlBody, baseURL) {
     const urls = []
@@ -10,15 +33,15 @@ function getURLsFromHTML(htmlBody, baseURL) {
                 const urlObj = new URL(`${baseURL}${linkElement.href}`);
                 urls.push(urlObj.href);
             } catch (error) {
-                console.log(`error with relative url: ${error.message}`)
+                console.log(` ERROR with relative url: ${error.message} `.bgRed)
             }
         } else {
-              try {
-                const urlObj = new URL(linkElement.href);
-                urls.push(urlObj.href);
-              } catch (error) {
-                console.log(`error with absolute url: ${error.message}`);
-              }
+            try {
+            const urlObj = new URL(linkElement.href);
+            urls.push(urlObj.href);
+            } catch (error) {
+            console.log(` ERROR with absolute url: ${error.message} `.bgRed);
+            }
         }
 
     }
@@ -36,5 +59,6 @@ function normalizeURL(urlString) {
 
 module.exports = {
     normalizeURL,
-    getURLsFromHTML
+    getURLsFromHTML,
+    sweepPage
 }
