@@ -1,0 +1,26 @@
+{
+  "name": "http_web_sweeper",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "start": "nodemon --no-warnings main.js",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ballyalley-o/http_web_sweeper.git"
+  },
+  "author": "bally lomibao",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ballyalley-o/http_web_sweeper/issues"
+  },
+  "homepage": "https://github.com/ballyalley-o/http_web_sweeper#readme",
+  "dependencies": {
+    "nodemon": "^2.0.22"
+  },
+  "devDependencies": {
+    "jest": "^29.5.0"
+  }
+}
