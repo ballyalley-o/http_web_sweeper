@@ -1,7 +1,5 @@
-const {normalizeURL, getURLsFromHTML} = require('./sweep.js');
+const {normalizeURL, getURLsFromHTML} = require('../sweep.js');
 const { test, expect } = require('@jest/globals');
-
-
 
 test('normalizeURL string protocol', () => {
     const input = 'https://blog.boot.dev/path'

@@ -19,7 +19,8 @@
   "homepage": "https://github.com/ballyalley-o/http_web_sweeper#readme",
   "dependencies": {
     "colors": "^1.4.0",
-    "jsdom": "^22.0.0"
+    "jsdom": "^22.0.0",
+    "moment": "^2.29.4"
   },
   "devDependencies": {
     "jest": "^29.5.0"
