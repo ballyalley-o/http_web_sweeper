@@ -1,4 +1,5 @@
-const { sweepPage } = require('./sweep')
+const { sweepPage } = require('./sweep');
+const { printReport } = require('./report')
 require('colors')
 
 async function main() {
@@ -13,10 +14,7 @@ async function main() {
     const baseURL = process.argv[2]
     console.log(` SWEEP HAS STARTED on ${baseURL}`.bgBlue)
     const pages = await sweepPage(baseURL, baseURL, {})
-
-    for (const page of Object.entries(pages)) {
-      console.log(page);
-    }
+    printReport(pages)
 }
 
 main()
