@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/ballyalley-o/http_web_sweeper#readme",
   "dependencies": {
+    "jsdom": "^22.0.0",
     "nodemon": "^2.0.22"
   },
   "devDependencies": {
